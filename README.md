@@ -11,27 +11,6 @@ RFantibody is a pipeline for the structure-based design of _de novo_ antibodies 
 
 The RFantibody pipeline is described in detail in [this preprint](https://www.biorxiv.org/content/10.1101/2024.03.14.585103v1)
 
-# Table of Contents
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [HLT File Format](#hlt-file-format)
-  - [Input Preparation](#input-preparation)
-  - [RFdiffusion](#rfdiffusion)
-  - [ProteinMPNN](#proteinmpnn)
-  - [RF2](#rf2)
-- [Practical Considerations for Antibody Design](#practical-considerations-for-antibody-design)
-  - [Selecting a Target Site](#selecting-a-target-site)
-  - [Nanobody Docks](#nanobody-docks)
-  - [Truncating your Target Protein](#truncating-your-target-protein)
-  - [Picking Hotspots](#picking-hotspots)
-  - [Antibody Design Scale](#antibody-design-scale)
-  - [Choosing CDR Lengths](#choosing-cdr-lengths)
-  - [Filtering Strategies](#filtering-strategies)
-- [Quiver Files](#quiver-files)
-- [Conclusion](#conclusion)
-
-
 # Requirements
 
 ### Docker
@@ -47,38 +26,22 @@ which docker
 ```
 If this returns a path then you have docker available and are good to go.
 
-### GPU Acceleration
+### GPU/CUDA Acceleration
 
 RFantibody requires an NVIDIA GPU to run. You can check whether you have an NVIDIA GPU available by running:
 ```
 nvidia-smi
+nvcc --version
 ```
 If this command runs successfully then you have an compatible GPU and RFantibody will be able to run on it.
 
-# Downloading Weights
-
-Navigate to the directory where RFantibody is downloaded. Then run the following command to download the pipeline weights to the RFantibody/weights directory.
-```
-bash include/download_weights.sh
-```
 
 # Installation
 
 ## Building and Running the RFantibody Docker Container
-
-You will need to run this to make sure that you have the correct privileges to start your docker container:
-
+https://hub.docker.com/r/ullahsamee/rfantibody
 ```
-sudo usermod -aG docker $USER
-```
-
-After running this command, you will need to restart your terminal session for this change to take effect.
-
-
-### Build docker image
-Navigate to the directory where RFantibody is downloaded. Then run the following command to build the Docker image for RFantibody:
-```
-docker build -t rfantibody .
+docker pull ullahsamee/rfantibody
 ```
 
 ### Start the Docker image
@@ -88,17 +51,6 @@ docker run --name rfantibody --gpus all -v .:/home --memory 10g -it rfantibody
 ```
 This will put you into the RFantibody container at the /home directory which mirrors the directory that you ran the last command from.
 
-
-
-## Setup the Python Environment
-From the RFantibody container run the following to setup the python environment:
-```
-bash /home/include/setup.sh
-```
-This does the following:
-- Download [Deep Graph Library](https://www.dgl.ai) in preparation of building the python environment
-- Use [Python Poetry](https://python-poetry.org) to build the Python environment
-- Build the [USalign](https://github.com/pylelab/USalign) executable
 
 # Usage
 
