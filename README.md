@@ -47,7 +47,7 @@ docker pull ullahsamee/rfantibody
 ### Start the Docker image
 Run the following command to start the docker container based on the image you just built:
 ```
-docker run --name rfantibody --gpus all -v .:/home --memory 10g -it rfantibody
+docker start -i rfantibody
 ```
 This will put you into the RFantibody container at the /home directory which mirrors the directory that you ran the last command from.
 
